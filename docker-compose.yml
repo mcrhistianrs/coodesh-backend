@@ -1,0 +1,29 @@
+services:
+  backend:
+    build:
+      context: .
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+    networks:
+      - app-network
+  database:
+    image: mongo:6.0
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_DATABASE: challengedb
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+volumes:
+  mongo-data:
+networks:
+  app-network:
+    driver: bridge
