@@ -30,3 +30,10 @@ Content-Type: application/json
     "name": "Test1 User"
 }
 
+
+
+### Get all words with filter
+GET http://localhost:3000/dictionary/entries/en?search=car&limit=5
+
+### Get all words with filter and pagination
+GET http://localhost:3000/dictionary/entries/en?search=car&limit=5&page=2
