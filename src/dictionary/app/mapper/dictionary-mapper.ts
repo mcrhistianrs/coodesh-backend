@@ -3,13 +3,17 @@ import { Dictionary } from '../../domain/entities/dictionary';
 import { DictionaryMongoDocument } from '../../infra/database/mongo/schemas/dictionary';
 import { DictionaryOutput } from '../dto/dictionary-output';
 import { DictionaryOutputPaginated } from '../dto/dictionary-paginated-output';
+
 class DictionaryMapper {
   static toOutput(input: Dictionary): DictionaryOutput {
     return {
       id: input.id,
       word: input.word,
+      favorite: input.favorite,
+      visited: input.visited,
     };
   }
+
   static toOutputPaginated(
     input: Dictionary[],
     limit: number,
@@ -23,18 +27,24 @@ class DictionaryMapper {
       hasPrev: false,
     };
   }
+
   static toDomain(input: DictionaryMongoDocument): Dictionary {
     return Dictionary.create({
       word: input.word,
+      favorite: input.favorite,
+      visited: input.visited,
     });
   }
+
   static toDatabase(input: Dictionary): DictionaryMongoDocument {
     const id = input.id ? new Types.ObjectId(input.id) : new Types.ObjectId();
     return {
       _id: id,
       word: input.word,
+      favorite: input.favorite,
       visited: input.visited,
     };
   }
 }
+
 export { DictionaryMapper };

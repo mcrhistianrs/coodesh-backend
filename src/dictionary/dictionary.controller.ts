@@ -1,6 +1,15 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { DictionaryFindAllDTO } from './app/dto/dictionary-find-all-dto';
 import { DictionaryMapper } from './app/mapper/dictionary-mapper';
+import { FavoriteWordUseCase } from './app/use-cases/favorite-word-use-case';
 import { FindAllUseCase } from './app/use-cases/find-all-use-case';
 import { FindByWordUseCase } from './app/use-cases/find-by-word-use-case';
 import { Dictionary } from './domain/entities/dictionary';
@@ -12,6 +21,7 @@ export class DictionaryController {
     private readonly dictionaryDAO: DictionaryDao,
     private readonly findAllUseCase: FindAllUseCase,
     private readonly findByWordUseCase: FindByWordUseCase,
+    private readonly favoriteWordUseCase: FavoriteWordUseCase,
   ) {}
 
   @Post()
@@ -20,6 +30,7 @@ export class DictionaryController {
     const createdDictionary = await this.dictionaryDAO.create(dictionary);
     return DictionaryMapper.toOutput(createdDictionary);
   }
+
   @Get('/entries/en/:word')
   async findByWord(@Param('word') word: string) {
     return this.findByWordUseCase.execute(word);
@@ -28,5 +39,10 @@ export class DictionaryController {
   @Get('/entries/en')
   async findAll(@Query() query: DictionaryFindAllDTO) {
     return this.findAllUseCase.execute(query);
+  }
+
+  @Patch('/entries/en/:word/favorite')
+  async favoriteWord(@Param('word') word: string) {
+    return this.favoriteWordUseCase.execute(word);
   }
 }

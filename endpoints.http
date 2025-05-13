@@ -41,4 +41,8 @@ GET http://localhost:3000/dictionary/entries/en?search=car&limit=5&page=2
 ### Get a specific word
 GET http://localhost:3000/dictionary/entries/en/adenocarcinoma
 
+### Favorite a word
+PATCH http://localhost:3000/dictionary/entries/en/adenocarcinoma/favorite
+
+
 

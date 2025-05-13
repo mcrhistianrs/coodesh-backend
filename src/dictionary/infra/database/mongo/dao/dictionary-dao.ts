@@ -57,7 +57,27 @@ class DictionaryDao {
     const dictionary = await this.dictionaryMongoSchema.findOneAndUpdate(
       { word: { $regex: `^${word}$`, $options: 'i' } },
       { visited: true },
+      { new: true },
     );
+
+    if (!dictionary) {
+      return null;
+    }
+
+    return DictionaryMapper.toDomain(dictionary);
+  }
+
+  async updateFavorite(word: string): Promise<Dictionary | null> {
+    const dictionary = await this.dictionaryMongoSchema.findOneAndUpdate(
+      { word: { $regex: `^${word}$`, $options: 'i' } },
+      { favorite: true },
+      { new: true },
+    );
+
+    if (!dictionary) {
+      return null;
+    }
+
     return DictionaryMapper.toDomain(dictionary);
   }
 }

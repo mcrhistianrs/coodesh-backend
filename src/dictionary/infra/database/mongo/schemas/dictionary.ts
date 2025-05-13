@@ -12,6 +12,9 @@ class DictionaryMongoModel {
 
   @Prop({ required: false, type: Boolean, default: false })
   visited: boolean;
+
+  @Prop({ required: false, type: Boolean, default: false })
+  favorite: boolean;
 }
 
 const DictionaryMongoSchema =

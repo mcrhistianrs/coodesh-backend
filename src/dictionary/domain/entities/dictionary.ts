@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 interface DictionaryFields {
   _id?: string;
   word: string;
+  favorite?: boolean;
   visited?: boolean;
 }
 
@@ -13,6 +14,8 @@ class Dictionary {
     this.fields = {
       ...fields,
       _id: id || fields._id || new Types.ObjectId().toString(),
+      favorite: fields.favorite || false,
+      visited: fields.visited || false,
     };
   }
 
@@ -29,6 +32,13 @@ class Dictionary {
   }
   set word(word: string) {
     this.fields.word = word;
+  }
+
+  get favorite(): boolean {
+    return this.fields.favorite;
+  }
+  set favorite(favorite: boolean) {
+    this.fields.favorite = favorite;
   }
 
   get visited(): boolean {
