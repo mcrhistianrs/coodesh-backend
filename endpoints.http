@@ -1,0 +1,32 @@
+### Create User
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "password123",
+    "name": "Test User"
+}
+
+### Get all users
+GET http://localhost:3000/user
+
+### Auth
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "password123"
+}
+
+### Signup
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+    "email": "test1@example.com",
+    "password": "password123",
+    "name": "Test1 User"
+}
+
