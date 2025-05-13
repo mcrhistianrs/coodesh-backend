@@ -12,6 +12,7 @@ import { DictionaryMapper } from './app/mapper/dictionary-mapper';
 import { FavoriteWordUseCase } from './app/use-cases/favorite-word-use-case';
 import { FindAllUseCase } from './app/use-cases/find-all-use-case';
 import { FindByWordUseCase } from './app/use-cases/find-by-word-use-case';
+import { UnfavoriteWordUseCase } from './app/use-cases/unfavorite-word-use-case';
 import { Dictionary } from './domain/entities/dictionary';
 import { DictionaryDao } from './infra/database/mongo/dao/dictionary-dao';
 
@@ -22,6 +23,7 @@ export class DictionaryController {
     private readonly findAllUseCase: FindAllUseCase,
     private readonly findByWordUseCase: FindByWordUseCase,
     private readonly favoriteWordUseCase: FavoriteWordUseCase,
+    private readonly unfavoriteWordUseCase: UnfavoriteWordUseCase,
   ) {}
 
   @Post()
@@ -44,5 +46,10 @@ export class DictionaryController {
   @Patch('/entries/en/:word/favorite')
   async favoriteWord(@Param('word') word: string) {
     return this.favoriteWordUseCase.execute(word);
+  }
+
+  @Patch('/entries/en/:word/unfavorite')
+  async unfavoriteWord(@Param('word') word: string) {
+    return this.unfavoriteWordUseCase.execute(word);
   }
 }

@@ -44,5 +44,7 @@ GET http://localhost:3000/dictionary/entries/en/adenocarcinoma
 ### Favorite a word
 PATCH http://localhost:3000/dictionary/entries/en/adenocarcinoma/favorite
 
+### Unfavorite a word
+PATCH http://localhost:3000/dictionary/entries/en/adenocarcinoma/unfavorite
 
 

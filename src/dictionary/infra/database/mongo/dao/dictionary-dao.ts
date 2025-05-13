@@ -80,6 +80,20 @@ class DictionaryDao {
 
     return DictionaryMapper.toDomain(dictionary);
   }
+
+  async updateUnfavorite(word: string): Promise<Dictionary | null> {
+    const dictionary = await this.dictionaryMongoSchema.findOneAndUpdate(
+      { word: { $regex: `^${word}$`, $options: 'i' } },
+      { favorite: false },
+      { new: true },
+    );
+
+    if (!dictionary) {
+      return null;
+    }
+
+    return DictionaryMapper.toDomain(dictionary);
+  }
 }
 
 export { DictionaryDao };
