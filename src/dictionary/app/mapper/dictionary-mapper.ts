@@ -33,6 +33,7 @@ class DictionaryMapper {
     return {
       _id: id,
       word: input.word,
+      visited: input.visited,
     };
   }
 }

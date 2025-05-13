@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 interface DictionaryFields {
   _id?: string;
   word: string;
+  visited?: boolean;
 }
 
 class Dictionary {
@@ -28,6 +29,13 @@ class Dictionary {
   }
   set word(word: string) {
     this.fields.word = word;
+  }
+
+  get visited(): boolean {
+    return this.fields.visited;
+  }
+  set visited(visited: boolean) {
+    this.fields.visited = visited;
   }
 }
 

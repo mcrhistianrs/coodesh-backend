@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DictionaryMapper } from './app/mapper/dictionary-mapper';
 import { FindAllUseCase } from './app/use-cases/find-all-use-case';
+import { FindByWordUseCase } from './app/use-cases/find-by-word-use-case';
 import { DictionaryController } from './dictionary.controller';
 import { DictionaryDao } from './infra/database/mongo/dao/dictionary-dao';
 import {
@@ -16,7 +17,12 @@ import {
     ]),
   ],
   controllers: [DictionaryController],
-  providers: [DictionaryDao, DictionaryMapper, FindAllUseCase],
-  exports: [DictionaryDao, DictionaryMapper, FindAllUseCase],
+  providers: [
+    DictionaryDao,
+    DictionaryMapper,
+    FindAllUseCase,
+    FindByWordUseCase,
+  ],
+  exports: [DictionaryDao, DictionaryMapper, FindAllUseCase, FindByWordUseCase],
 })
 export class DictionaryModule {}
