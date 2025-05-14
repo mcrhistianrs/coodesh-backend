@@ -49,3 +49,7 @@ PATCH http://localhost:3000/dictionary/entries/en/adenocarcinoma/favorite
 PATCH http://localhost:3000/dictionary/entries/en/adenocarcinoma/unfavorite
 
 
+
+### Get user history
+GET http://localhost:3000/user/me/history?page=1&limit=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2ZDhmOTJiMGIzM2NhOGIwOSIsImlhdCI6MTc0NzI0MDY4MSwiZXhwIjoxNzQ3MjQ0MjgxfQ.rmWQndRRqL0JOsZd8JipJ4ZpuW1JlqehvBcc-wQ7dTo

@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { HistoryModule } from 'src/history/history.module';
-import { HistoryRepository } from 'src/history/infra/database/mongo/repository/history-dao';
+import { HistoryRepository } from 'src/history/infra/database/mongo/repository/history-repository';
 import {
   HistoryMongoModel,
   HistoryMongoSchema,

@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import {
+  DictionaryMongoModel,
+  DictionaryMongoSchema,
+} from 'src/dictionary/infra/database/mongo/schemas/dictionary';
 import { HistoryController } from './history.controller';
-import { HistoryDao } from './infra/database/mongo/dao/history-dao';
+import { HistoryRepository } from './infra/database/mongo/repository/history-repository';
 import {
   HistoryMongoModel,
   HistoryMongoSchema,
@@ -11,10 +15,11 @@ import {
   imports: [
     MongooseModule.forFeature([
       { name: HistoryMongoModel.name, schema: HistoryMongoSchema },
+      { name: DictionaryMongoModel.name, schema: DictionaryMongoSchema },
     ]),
   ],
   controllers: [HistoryController],
-  providers: [HistoryDao],
-  exports: [HistoryDao],
+  providers: [HistoryRepository],
+  exports: [HistoryRepository],
 })
 export class HistoryModule {}

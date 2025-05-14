@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { HistoryRepository } from 'src/history/infra/database/mongo/repository/history-dao';
+import { HistoryRepository } from 'src/history/infra/database/mongo/repository/history-repository';
 
 @Injectable()
 class FindByWordUseCase {

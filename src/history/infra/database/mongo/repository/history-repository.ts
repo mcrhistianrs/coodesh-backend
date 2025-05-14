@@ -46,5 +46,25 @@ class HistoryRepository {
       );
     }
   }
+
+  async findAll(userId: string): Promise<any[]> {
+    const histories = await this.historyMongoSchema
+      .find({ userId })
+      .sort({ createdAt: -1 });
+
+    const historyWithWords = await Promise.all(
+      histories.map(async (history) => {
+        const dictionary = await this.dictionaryMongoSchema.findById(
+          history.dictionaryId,
+        );
+        return {
+          word: dictionary ? dictionary.word : 'Unknown',
+          added: history.createdAt,
+        };
+      }),
+    );
+
+    return historyWithWords;
+  }
 }
 export { HistoryRepository };
