@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
-import { DictionaryDao } from 'src/dictionary/infra/database/mongo/dao/dictionary-dao';
-import { DictionaryOutput } from '../dto/dictionary-output';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { HistoryRepository } from 'src/history/infra/database/mongo/repository/history-dao';
 
 @Injectable()
 class FindByWordUseCase {
-  constructor(private readonly dictionaryDAO: DictionaryDao) {}
+  private secretKey: string;
 
-  async execute(word: string): Promise<DictionaryOutput | null> {
-    if (!word) {
+  constructor(
+    private readonly historyRepository: HistoryRepository,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
+  ) {
+    this.secretKey = this.configService.get<string>('JWT_SECRET');
+  }
+
+  async execute(token: string, word: string) {
+    try {
+      const decoded = this.jwtService.verify(token, {
+        secret: this.secretKey,
+      });
+      const userId = decoded.id || decoded.sub;
+
+      const history = await this.historyRepository.updateVisited(userId, word);
+      if (!history) {
+        return null;
+      }
+      return {
+        id: history.dictionaryId,
+      };
+    } catch (error) {
+      console.error('Token verification error:', error.message);
       return null;
     }
-
-    const dictionary = await this.dictionaryDAO.findByWord({ word });
-
-    if (!dictionary) {
-      return null;
-    }
-    await this.dictionaryDAO.updateVisited(word);
-    return {
-      id: dictionary.id,
-      word: dictionary.word,
-    };
   }
 }
 

@@ -9,12 +9,6 @@ export type DictionaryMongoDocument = DictionaryMongoModel & {
 class DictionaryMongoModel {
   @Prop({ required: true, type: String })
   word: string;
-
-  @Prop({ required: false, type: Boolean, default: false })
-  visited: boolean;
-
-  @Prop({ required: false, type: Boolean, default: false })
-  favorite: boolean;
 }
 
 const DictionaryMongoSchema =

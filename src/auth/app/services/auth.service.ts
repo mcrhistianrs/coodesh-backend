@@ -26,19 +26,19 @@ export class AuthService {
     this.secretKey = secretKey;
   }
 
-  async validateUser(email: string, password: string): Promise<boolean> {
+  async validateUser(email: string, password: string): Promise<User> {
     const user = await this.userDAO.findByEmail(email);
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('User not found');
     }
     const isPasswordValid = await this.hashService.compare(
       password,
       user.password,
     );
     if (!isPasswordValid) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Invalid credentials');
     }
-    return isPasswordValid;
+    return user;
   }
 
   async generateToken(user: User): Promise<string> {

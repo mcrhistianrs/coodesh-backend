@@ -38,8 +38,9 @@ GET http://localhost:3000/dictionary/entries/en?search=car&limit=5
 ### Get all words with filter and pagination
 GET http://localhost:3000/dictionary/entries/en?search=car&limit=5&page=2
 
-### Get a specific word
+### Get a specific word using jwt token
 GET http://localhost:3000/dictionary/entries/en/adenocarcinoma
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2ZDhmOTJiMGIzM2NhOGIwOSIsImlhdCI6MTc0NzIxODI0MCwiZXhwIjoxNzQ3MjIxODQwfQ.dBc-LBVd436YZoS7o_6cb2w7AxjiGu7ew2yBvmeCH2A
 
 ### Favorite a word
 PATCH http://localhost:3000/dictionary/entries/en/adenocarcinoma/favorite

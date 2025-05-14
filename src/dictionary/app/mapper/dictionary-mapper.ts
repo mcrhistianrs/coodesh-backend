@@ -9,8 +9,6 @@ class DictionaryMapper {
     return {
       id: input.id,
       word: input.word,
-      favorite: input.favorite,
-      visited: input.visited,
     };
   }
 
@@ -31,8 +29,6 @@ class DictionaryMapper {
   static toDomain(input: DictionaryMongoDocument): Dictionary {
     return Dictionary.create({
       word: input.word,
-      favorite: input.favorite,
-      visited: input.visited,
     });
   }
 
@@ -41,8 +37,6 @@ class DictionaryMapper {
     return {
       _id: id,
       word: input.word,
-      favorite: input.favorite,
-      visited: input.visited,
     };
   }
 }

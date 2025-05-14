@@ -1,10 +1,16 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
+import { HistoryModule } from 'src/history/history.module';
+import { HistoryRepository } from 'src/history/infra/database/mongo/repository/history-dao';
+import {
+  HistoryMongoModel,
+  HistoryMongoSchema,
+} from 'src/history/infra/database/mongo/schemas/history';
 import { DictionaryMapper } from './app/mapper/dictionary-mapper';
-import { FavoriteWordUseCase } from './app/use-cases/favorite-word-use-case';
 import { FindAllUseCase } from './app/use-cases/find-all-use-case';
 import { FindByWordUseCase } from './app/use-cases/find-by-word-use-case';
-import { UnfavoriteWordUseCase } from './app/use-cases/unfavorite-word-use-case';
 import { DictionaryController } from './dictionary.controller';
 import { DictionaryDao } from './infra/database/mongo/dao/dictionary-dao';
 import {
@@ -16,24 +22,20 @@ import {
   imports: [
     MongooseModule.forFeature([
       { name: DictionaryMongoModel.name, schema: DictionaryMongoSchema },
+      { name: HistoryMongoModel.name, schema: HistoryMongoSchema },
     ]),
+    forwardRef(() => HistoryModule),
   ],
   controllers: [DictionaryController],
   providers: [
     DictionaryDao,
     DictionaryMapper,
+    HistoryRepository,
     FindAllUseCase,
     FindByWordUseCase,
-    FavoriteWordUseCase,
-    UnfavoriteWordUseCase,
+    JwtService,
+    ConfigService,
   ],
-  exports: [
-    DictionaryDao,
-    DictionaryMapper,
-    FindAllUseCase,
-    FindByWordUseCase,
-    FavoriteWordUseCase,
-    UnfavoriteWordUseCase,
-  ],
+  exports: [DictionaryDao, DictionaryMapper, FindAllUseCase, FindByWordUseCase],
 })
 export class DictionaryModule {}
