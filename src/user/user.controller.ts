@@ -12,6 +12,11 @@ import { ProfileUseCase } from 'src/user/app/use-cases/profile-use-case';
 import { CreateUserDTO } from './app/dto/create-user.dto';
 import { FavoriteDto } from './app/dto/favorite.dto';
 import { HistoryDto } from './app/dto/history.dto';
+import { SwaggerCreateUserResponse } from './app/swagger/swagger-create-user-response';
+import { SwaggerGetUserFavoritesResponse } from './app/swagger/swagger-get-user-favorites-response';
+import { SwaggerGetUserHistoryResponse } from './app/swagger/swagger-get-user-history-response';
+import { SwaggerGetUserProfileResponse } from './app/swagger/swagger-get-user-profile-response';
+import { SwaggerListUsersResponse } from './app/swagger/swagger-list-users-response';
 import { CreateUserUseCase } from './app/use-cases/create-user-use-case';
 import { FavoriteUseCase } from './app/use-cases/favorite-use-case';
 import { HistoryUseCase } from './app/use-cases/history-use-case';
@@ -28,17 +33,20 @@ export class UserController {
   ) {}
 
   @Post('/')
+  @SwaggerCreateUserResponse()
   async createUser(@Body() input: CreateUserDTO) {
     return await this.createUserUseCase.execute(input);
   }
 
   @Get('/')
+  @SwaggerListUsersResponse()
   async listUsers() {
     return await this.listUsersUseCase.execute();
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('/me/history')
+  @SwaggerGetUserHistoryResponse()
   async getUserHistory(
     @Headers('authorization') authorization: string,
     @Query('page') page?: string,
@@ -55,6 +63,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/me/favorites')
+  @SwaggerGetUserFavoritesResponse()
   async getUserFavorites(
     @Headers('authorization') authorization: string,
     @Query('page') page?: string,
@@ -71,6 +80,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/me')
+  @SwaggerGetUserProfileResponse()
   async getUserProfile(@Headers('authorization') authorization: string) {
     const token = authorization.split(' ')[1];
     return await this.profileUseCase.execute(token);
