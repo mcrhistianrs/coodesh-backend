@@ -5,6 +5,7 @@ interface IUserDAO {
   create(input: User): Promise<User>;
   findAll(filter?: UserFindAllDTO): Promise<User[]>;
   findByEmail(email: string): Promise<User>;
+  findById(id: string): Promise<User>;
   update(input: User): Promise<User>;
   delete(id: string): Promise<User>;
 }

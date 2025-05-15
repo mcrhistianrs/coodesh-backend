@@ -26,6 +26,11 @@ class UserMongoDAO implements IUserDAO {
     return user ? UserMapper.toDomain(user) : null;
   }
 
+  async findById(id: string): Promise<User> {
+    const user = await this.userMongoSchema.findById(id).exec();
+    return user ? UserMapper.toDomain(user) : null;
+  }
+
   async findAll(filter?: UserFindAllDTO): Promise<User[]> {
     const query: any = {};
 

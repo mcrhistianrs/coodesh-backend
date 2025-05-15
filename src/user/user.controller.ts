@@ -8,6 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/app/guards/jwt-auth.guard';
+import { ProfileUseCase } from 'src/user/app/use-cases/profile-use-case';
 import { CreateUserDTO } from './app/dto/create-user.dto';
 import { FavoriteDto } from './app/dto/favorite.dto';
 import { HistoryDto } from './app/dto/history.dto';
@@ -23,6 +24,7 @@ export class UserController {
     private readonly listUsersUseCase: ListUsersUseCase,
     private readonly historyUseCase: HistoryUseCase,
     private readonly favoriteUseCase: FavoriteUseCase,
+    private readonly profileUseCase: ProfileUseCase,
   ) {}
 
   @Post('/')
@@ -65,5 +67,12 @@ export class UserController {
       limit,
     };
     return await this.favoriteUseCase.execute(favoriteDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/me')
+  async getUserProfile(@Headers('authorization') authorization: string) {
+    const token = authorization.split(' ')[1];
+    return await this.profileUseCase.execute(token);
   }
 }

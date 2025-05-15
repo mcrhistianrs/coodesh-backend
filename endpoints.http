@@ -71,3 +71,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2Z
 GET http://localhost:3000/user/me/favorites
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2ZDhmOTJiMGIzM2NhOGIwOSIsImlhdCI6MTc0NzI1MTU2MiwiZXhwIjoxNzQ3MjU1MTYyfQ.0hvsuS8_u_5LmI-2tiDKQaXLC93Do-tHxoqipt4Z36s
 
+### Get user profile
+GET http://localhost:3000/user/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2ZDhmOTJiMGIzM2NhOGIwOSIsImlhdCI6MTc0NzMyNzUyMSwiZXhwIjoxNzQ3MzMxMTIxfQ.-lL_cvewA9o8FDpdxXHx7N0wADvC9UZlpQUCPVEZI4A

@@ -52,6 +52,13 @@ class DictionaryDao {
     }
     return this.dictionaryMongoSchema.countDocuments(query);
   }
+
+  async findById(id: string): Promise<Dictionary | null> {
+    const dictionary = await this.dictionaryMongoSchema.findById(id);
+    if (!dictionary) {
+      return null;
+    }
+  }
 }
 
 export { DictionaryDao };
