@@ -15,6 +15,7 @@ import { DictionaryMapper } from './app/mapper/dictionary-mapper';
 import { FavoriteUseCase } from './app/use-cases/favorite-use-case';
 import { FindAllUseCase } from './app/use-cases/find-all-use-case';
 import { FindByWordUseCase } from './app/use-cases/find-by-word-use-case';
+import { UnfavoriteUseCase } from './app/use-cases/unfavorite-use-case';
 import { Dictionary } from './domain/entities/dictionary';
 import { DictionaryDao } from './infra/database/mongo/dao/dictionary-dao';
 
@@ -25,6 +26,7 @@ export class DictionaryController {
     private readonly findAllUseCase: FindAllUseCase,
     private readonly findByWordUseCase: FindByWordUseCase,
     private readonly favoriteUseCase: FavoriteUseCase,
+    private readonly unfavoriteUseCase: UnfavoriteUseCase,
   ) {}
 
   @Post()
@@ -41,7 +43,6 @@ export class DictionaryController {
     @Headers('authorization') authorization: string,
   ) {
     try {
-      console.log('favoriteWord', word);
       const token = authorization.split(' ')[1];
       return this.favoriteUseCase.favorite(token, word);
     } catch (error) {
@@ -71,7 +72,7 @@ export class DictionaryController {
   ) {
     try {
       const token = authorization.split(' ')[1];
-      return this.favoriteUseCase.unfavorite(token, word);
+      return this.unfavoriteUseCase.execute(token, word);
     } catch (error) {
       return { error: 'Token processing error', message: error.message };
     }

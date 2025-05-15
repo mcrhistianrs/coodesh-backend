@@ -18,6 +18,7 @@ import { DictionaryMapper } from './app/mapper/dictionary-mapper';
 import { FavoriteUseCase } from './app/use-cases/favorite-use-case';
 import { FindAllUseCase } from './app/use-cases/find-all-use-case';
 import { FindByWordUseCase } from './app/use-cases/find-by-word-use-case';
+import { UnfavoriteUseCase } from './app/use-cases/unfavorite-use-case';
 import { DictionaryController } from './dictionary.controller';
 import { DictionaryDao } from './infra/database/mongo/dao/dictionary-dao';
 import {
@@ -44,6 +45,7 @@ import {
     FindAllUseCase,
     FindByWordUseCase,
     FavoriteUseCase,
+    UnfavoriteUseCase,
     JwtService,
     ConfigService,
   ],

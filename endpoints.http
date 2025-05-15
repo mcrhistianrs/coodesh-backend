@@ -42,11 +42,7 @@ GET http://localhost:3000/dictionary/entries/en?search=car&limit=5&page=2
 GET http://localhost:3000/dictionary/entries/en/adenocarcinoma
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2ZDhmOTJiMGIzM2NhOGIwOSIsImlhdCI6MTc0NzIxODI0MCwiZXhwIjoxNzQ3MjIxODQwfQ.dBc-LBVd436YZoS7o_6cb2w7AxjiGu7ew2yBvmeCH2A
 
-### Favorite a word
-PATCH http://localhost:3000/dictionary/entries/en/adenocarcinoma/favorite
 
-### Unfavorite a word
-PATCH http://localhost:3000/dictionary/entries/en/adenocarcinoma/unfavorite
 
 ### Get user history
 GET http://localhost:3000/user/me/history?page=1&limit=10
@@ -61,6 +57,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2Z
 {
     "word": "adenocarcinoma"
 }
+
+### Unfavorite a word
+PATCH http://localhost:3000/dictionary/entries/en/absolute/unfavorite
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2ZDhmOTJiMGIzM2NhOGIwOSIsImlhdCI6MTc0NzMwNjE1OCwiZXhwIjoxNzQ3MzA5NzU4fQ.YAJ-dtCLxV19bgERqlMNlpCqPyqbJN1onBdg_0rPq2c
+
+{
+    "word": "adenocarcinoma"
+}
+
 ### Get user favorites
 GET http://localhost:3000/user/me/favorites
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2ZDhmOTJiMGIzM2NhOGIwOSIsImlhdCI6MTc0NzI1MTU2MiwiZXhwIjoxNzQ3MjU1MTYyfQ.0hvsuS8_u_5LmI-2tiDKQaXLC93Do-tHxoqipt4Z36s
