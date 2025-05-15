@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { DictionaryDao } from 'src/dictionary/infra/database/mongo/dao/dictionary-dao';
@@ -59,12 +59,8 @@ class ProfileUseCase {
           email: user.email,
         },
       };
-    } catch (error) {
-      return {
-        success: false,
-        message: 'Error processing profile request',
-        error: error.message,
-      };
+    } catch {
+      throw new BadRequestException('Error processing profile request');
     }
   }
 }

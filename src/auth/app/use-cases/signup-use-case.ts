@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDTO } from 'src/user/app/dto/create-user.dto';
 import { User } from 'src/user/domain/entities/user';
 import { IUserDAO } from 'src/user/domain/interfaces/interface-user-dao';
@@ -12,18 +12,28 @@ class SignupUseCase {
     private readonly authService: AuthService,
   ) {}
   async execute(input: CreateUserDTO): Promise<AuthOutputDTO> {
-    const userAlreadyExists = await this.userMongoDAO.findByEmail(input.email);
-    if (userAlreadyExists) {
-      throw new Error('User already exists');
+    try {
+      const userAlreadyExists = await this.userMongoDAO.findByEmail(
+        input.email,
+      );
+      if (userAlreadyExists) {
+        throw new BadRequestException('User already exists');
+      }
+      const userDomainEntity = User.create(input);
+      const userDataBaseEntity =
+        await this.userMongoDAO.create(userDomainEntity);
+      const token = await this.authService.generateToken(userDataBaseEntity);
+      return {
+        id: userDataBaseEntity.id,
+        name: userDataBaseEntity.name,
+        token,
+      };
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+      throw new BadRequestException('Error processing signup request');
     }
-    const userDomainEntity = User.create(input);
-    const userDataBaseEntity = await this.userMongoDAO.create(userDomainEntity);
-    const token = await this.authService.generateToken(userDataBaseEntity);
-    return {
-      id: userDataBaseEntity.id,
-      name: userDataBaseEntity.name,
-      token,
-    };
   }
 }
 export { SignupUseCase };

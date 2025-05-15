@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { DictionaryDao } from 'src/dictionary/infra/database/mongo/dao/dictionary-dao';
@@ -49,12 +49,8 @@ class FavoriteUseCase {
         message: `Added "${word}" to favorites`,
         favorite,
       };
-    } catch (error) {
-      return {
-        success: false,
-        message: 'Error processing favorite request',
-        error: error.message,
-      };
+    } catch {
+      throw new BadRequestException('Error processing favorite request');
     }
   }
 
@@ -89,12 +85,8 @@ class FavoriteUseCase {
         success: true,
         message: `Removed "${word}" from favorites`,
       };
-    } catch (error) {
-      return {
-        success: false,
-        message: 'Error processing unfavorite request',
-        error: error.message,
-      };
+    } catch {
+      throw new BadRequestException('Error processing unfavorite request');
     }
   }
 }

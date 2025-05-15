@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { IHashService } from 'src/hash/app/domain/interface/interface-hash-service';
 import { IUserDAO } from 'src/user/domain/interfaces/interface-user-dao';
 import { AuthOutputDTO } from '../dto/auth-output-dto';
@@ -15,11 +20,18 @@ class LoginUseCase {
   ) {}
 
   async execute(email: string): Promise<AuthOutputDTO> {
-    const user = await this.userDAO.findByEmail(email);
-    if (!user) {
-      throw new NotFoundException('User not found');
+    try {
+      const user = await this.userDAO.findByEmail(email);
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      return new AuthOutputDTO(await this.authService.generateToken(user));
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException('Error processing login request');
     }
-    return new AuthOutputDTO(await this.authService.generateToken(user));
   }
 }
 

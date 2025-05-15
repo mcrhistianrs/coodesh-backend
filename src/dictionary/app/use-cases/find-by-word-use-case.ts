@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { HistoryRepository } from 'src/history/infra/database/mongo/repository/history-repository';
@@ -29,9 +29,8 @@ class FindByWordUseCase {
       return {
         id: history.dictionaryId,
       };
-    } catch (error) {
-      console.error('Token verification error:', error.message);
-      return null;
+    } catch {
+      throw new BadRequestException('Error processing find by word request');
     }
   }
 }

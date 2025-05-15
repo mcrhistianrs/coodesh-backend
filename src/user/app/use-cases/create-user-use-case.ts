@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
 import HashService from 'src/hash/app/services/hash.service';
 import { User } from '../../domain/entities/user';
@@ -16,15 +16,19 @@ class CreateUserUseCase {
   ) {}
 
   async execute(input: CreateUserDTO): Promise<UserOutputDTO> {
-    const userInput = User.create({
-      email: input.email,
-      password: input.password,
-      name: input.name,
-    });
-    const encryptedPassword = await this.hashService.hash(userInput.password);
-    userInput.password = encryptedPassword;
-    const user = await this.userDAO.create(userInput);
-    return new UserOutputDTO(user.id, user.email, user.name);
+    try {
+      const userInput = User.create({
+        email: input.email,
+        password: input.password,
+        name: input.name,
+      });
+      const encryptedPassword = await this.hashService.hash(userInput.password);
+      userInput.password = encryptedPassword;
+      const user = await this.userDAO.create(userInput);
+      return new UserOutputDTO(user.id, user.email, user.name);
+    } catch {
+      throw new BadRequestException('Error processing create user request');
+    }
   }
 }
 
