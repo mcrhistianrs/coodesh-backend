@@ -4,6 +4,7 @@ import {
   DictionaryMongoModel,
   DictionaryMongoSchema,
 } from 'src/dictionary/infra/database/mongo/schemas/dictionary';
+import { FavoriteController } from './favorite.controller';
 import { FavoriteRepository } from './infra/database/mongo/repository/favorite-repository';
 import {
   FavoriteMongoModel,
@@ -17,7 +18,7 @@ import {
       { name: DictionaryMongoModel.name, schema: DictionaryMongoSchema },
     ]),
   ],
-  controllers: [],
+  controllers: [FavoriteController],
   providers: [FavoriteRepository],
   exports: [FavoriteRepository],
 })
