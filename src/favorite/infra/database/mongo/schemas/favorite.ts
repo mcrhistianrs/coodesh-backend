@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema({ timestamps: true })
+@Schema({ collection: 'favorite', timestamps: true })
 class FavoriteMongoModel extends Document {
   @Prop({ required: true })
   userId: string;

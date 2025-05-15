@@ -15,7 +15,7 @@ class FavoriteRepository {
     private readonly dictionaryMongoSchema: Model<DictionaryMongoModel>,
   ) {}
 
-  async updateVisited(userId: string, word: string): Promise<Favorite | null> {
+  async updateFavorite(userId: string, word: string): Promise<Favorite | null> {
     const dictionary = await this.dictionaryMongoSchema.findOne({
       word,
     });
@@ -45,6 +45,23 @@ class FavoriteRepository {
         }),
       );
     }
+  }
+
+  async removeFavorite(userId: string, word: string): Promise<boolean> {
+    const dictionary = await this.dictionaryMongoSchema.findOne({
+      word,
+    });
+
+    if (!dictionary) {
+      return false;
+    }
+
+    const result = await this.favoriteMongoSchema.deleteOne({
+      userId,
+      dictionaryId: dictionary.id,
+    });
+
+    return result.deletedCount > 0;
   }
 
   async findAll(userId: string): Promise<any[]> {

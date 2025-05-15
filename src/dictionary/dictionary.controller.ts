@@ -4,6 +4,7 @@ import {
   Get,
   Headers,
   Param,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -11,6 +12,7 @@ import {
 import { JwtAuthGuard } from 'src/auth/app/guards/jwt-auth.guard';
 import { DictionaryFindAllDTO } from './app/dto/dictionary-find-all-dto';
 import { DictionaryMapper } from './app/mapper/dictionary-mapper';
+import { FavoriteUseCase } from './app/use-cases/favorite-use-case';
 import { FindAllUseCase } from './app/use-cases/find-all-use-case';
 import { FindByWordUseCase } from './app/use-cases/find-by-word-use-case';
 import { Dictionary } from './domain/entities/dictionary';
@@ -22,6 +24,7 @@ export class DictionaryController {
     private readonly dictionaryDAO: DictionaryDao,
     private readonly findAllUseCase: FindAllUseCase,
     private readonly findByWordUseCase: FindByWordUseCase,
+    private readonly favoriteUseCase: FavoriteUseCase,
   ) {}
 
   @Post()
@@ -29,6 +32,21 @@ export class DictionaryController {
     const dictionary = Dictionary.create({ word: input.word });
     const createdDictionary = await this.dictionaryDAO.create(dictionary);
     return DictionaryMapper.toOutput(createdDictionary);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('/entries/en/:word/favorite')
+  async favoriteWord(
+    @Param('word') word: string,
+    @Headers('authorization') authorization: string,
+  ) {
+    try {
+      console.log('favoriteWord', word);
+      const token = authorization.split(' ')[1];
+      return this.favoriteUseCase.favorite(token, word);
+    } catch (error) {
+      return { error: 'Token processing error', message: error.message };
+    }
   }
 
   @UseGuards(JwtAuthGuard)
@@ -40,6 +58,20 @@ export class DictionaryController {
     try {
       const token = authorization.split(' ')[1];
       return this.findByWordUseCase.execute(token, word);
+    } catch (error) {
+      return { error: 'Token processing error', message: error.message };
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('/entries/en/:word/unfavorite')
+  async unfavoriteWord(
+    @Param('word') word: string,
+    @Headers('authorization') authorization: string,
+  ) {
+    try {
+      const token = authorization.split(' ')[1];
+      return this.favoriteUseCase.unfavorite(token, word);
     } catch (error) {
       return { error: 'Token processing error', message: error.message };
     }
