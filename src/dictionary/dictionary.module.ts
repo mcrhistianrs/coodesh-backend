@@ -8,6 +8,7 @@ import {
   FavoriteMongoModel,
   FavoriteSchema,
 } from 'src/favorite/infra/database/mongo/schemas/favorite';
+import { FreeDictionaryServices } from 'src/free-dictionary/services/free-dictionary.services';
 import { HistoryModule } from 'src/history/history.module';
 import { HistoryRepository } from 'src/history/infra/database/mongo/repository/history-repository';
 import {
@@ -48,6 +49,7 @@ import {
     UnfavoriteUseCase,
     JwtService,
     ConfigService,
+    FreeDictionaryServices,
   ],
   exports: [
     DictionaryDao,

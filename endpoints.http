@@ -40,7 +40,7 @@ GET http://localhost:3000/dictionary/entries/en?search=car&limit=5&page=2
 
 ### Get a specific word using jwt token
 GET http://localhost:3000/dictionary/entries/en/adenocarcinoma
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2ZDhmOTJiMGIzM2NhOGIwOSIsImlhdCI6MTc0NzIxODI0MCwiZXhwIjoxNzQ3MjIxODQwfQ.dBc-LBVd436YZoS7o_6cb2w7AxjiGu7ew2yBvmeCH2A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2ZDhmOTJiMGIzM2NhOGIwOSIsImlhdCI6MTc0NzQyNzI3OCwiZXhwIjoxNzQ3NDMwODc4fQ.y1HGeSx1BmR4Ddkb-tDpHLO1cIC-kowPT8pTRmhpQV0
 
 
 

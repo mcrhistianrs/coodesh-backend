@@ -16,27 +16,43 @@ export const SwaggerFindByWordResponse = () =>
       description: 'Word successfully found.',
       schema: {
         example: {
-          id: '507f1f77bcf86cd799439011',
-          word: 'serendipity',
-          definition:
-            'The occurrence of events by chance in a happy or beneficial way.',
-          examples: [
-            'Finding this book was pure serendipity.',
-            'It was serendipity that led me to meet my future business partner.',
+          results: [
+            {
+              word: 'serendipity',
+              phonetic: '/ˌserənˈdipədē/',
+              phonetics: [
+                {
+                  text: '/ˌserənˈdipədē/',
+                  audio:
+                    'https://api.dictionaryapi.dev/media/pronunciations/en/serendipity.mp3',
+                },
+              ],
+              meanings: [
+                {
+                  partOfSpeech: 'noun',
+                  definitions: [
+                    {
+                      definition:
+                        'The occurrence of events by chance in a happy or beneficial way.',
+                      example: 'Finding this book was pure serendipity.',
+                      synonyms: ['chance', 'fortune', 'luck'],
+                      antonyms: ['misfortune', 'bad luck'],
+                    },
+                  ],
+                },
+              ],
+              license: {
+                name: 'CC BY-SA 3.0',
+                url: 'https://creativecommons.org/licenses/by-sa/3.0',
+              },
+              sourceUrls: ['https://en.wiktionary.org/wiki/serendipity'],
+            },
           ],
-          synonyms: ['chance', 'fortune', 'luck'],
-          antonyms: ['misfortune', 'bad luck'],
-          etymology:
-            'From Serendip, an old name for Sri Lanka, in the Persian fairy tale "The Three Princes of Serendip"',
-          pronunciation: 'ˌserənˈdipədē',
-          partOfSpeech: 'noun',
-          isFavorite: true,
-          history: {
-            id: '507f1f77bcf86cd799439012',
-            userId: 'user123',
-            word: 'serendipity',
-            searchedAt: '2024-03-21T10:00:00.000Z',
-          },
+          totalDocs: 1,
+          page: 1,
+          totalPages: 1,
+          hasNext: false,
+          hasPrev: false,
         },
       },
     }),
@@ -47,7 +63,7 @@ export const SwaggerFindByWordResponse = () =>
         'application/json': {
           example: {
             code: 'invalid_input_exception',
-            message: 'Invalid word provided.',
+            message: 'Error processing find by word request',
           },
         },
       },
