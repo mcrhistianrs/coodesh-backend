@@ -34,7 +34,7 @@ class FindByWordUseCase {
       const history = await this.historyRepository.updateVisited(userId, word);
       if (!history) {
         return {
-          results: [freeDictionaryInformation],
+          results: freeDictionaryInformation,
           totalDocs: 1,
           page: 1,
           totalPages: 1,
@@ -44,7 +44,7 @@ class FindByWordUseCase {
       }
 
       return {
-        results: [freeDictionaryInformation],
+        results: freeDictionaryInformation,
         totalDocs: 1,
         page: 1,
         totalPages: 1,
