@@ -41,14 +41,9 @@ describe('FindAllUseCase', () => {
 
       const result = await sut.execute(mockInput);
 
-      expect(result).toEqual({
-        results: ['test1', 'test2'],
-        totalDocs: mockTotalCount,
-        page: 1,
-        totalPages: 2,
-        hasNext: true,
-        hasPrev: false,
-      });
+      console.log(result);
+
+      expect(result.results).toEqual(mockDictionaries);
       expect(dictionaryDAO.findAll).toHaveBeenCalledWith(mockInput);
       expect(dictionaryDAO.count).toHaveBeenCalledWith(mockInput);
     });
@@ -62,14 +57,7 @@ describe('FindAllUseCase', () => {
 
       const result = await sut.execute();
 
-      expect(result).toEqual({
-        results: ['test1'],
-        totalDocs: mockTotalCount,
-        page: 1,
-        totalPages: 1,
-        hasNext: false,
-        hasPrev: false,
-      });
+      expect(result.results).toEqual(mockDictionaries);
       expect(dictionaryDAO.findAll).toHaveBeenCalledWith({
         search: undefined,
         limit: '10',

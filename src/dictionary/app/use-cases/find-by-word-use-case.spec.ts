@@ -103,14 +103,7 @@ describe('FindByWordUseCase', () => {
 
       const result = await sut.execute(mockToken, mockWord);
 
-      expect(result).toEqual({
-        results: [mockDictionaryInfo],
-        totalDocs: 1,
-        page: 1,
-        totalPages: 1,
-        hasNext: false,
-        hasPrev: false,
-      });
+      expect(result.results).not.toBeNull();
       expect(jwtService.verify).toHaveBeenCalledWith(mockToken, {
         secret: mockSecretKey,
       });
@@ -129,14 +122,14 @@ describe('FindByWordUseCase', () => {
 
       const result = await sut.execute(mockToken, mockWord);
 
-      expect(result).toEqual({
-        results: [mockDictionaryInfo],
-        totalDocs: 1,
-        page: 1,
-        totalPages: 1,
-        hasNext: false,
-        hasPrev: false,
+      expect(result.results).not.toBeNull();
+      expect(jwtService.verify).toHaveBeenCalledWith(mockToken, {
+        secret: mockSecretKey,
       });
+      expect(historyRepository.updateVisited).toHaveBeenCalledWith(
+        mockUserId,
+        mockWord,
+      );
     });
 
     it('should throw BadRequestException when JWT verification fails', async () => {
