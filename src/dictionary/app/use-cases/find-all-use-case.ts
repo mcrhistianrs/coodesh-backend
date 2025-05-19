@@ -1,22 +1,16 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { DictionaryDao } from 'src/dictionary/infra/database/mongo/dao/dictionary-dao';
-import { FreeDictionaryServices } from 'src/free-dictionary/services/free-dictionary.services';
 import { DictionaryFindAllDTO } from '../dto/dictionary-find-all-dto';
 import { DictionaryOutputPaginated } from '../dto/dictionary-paginated-output';
 
 @Injectable()
 class FindAllUseCase {
-  constructor(
-    private readonly dictionaryDAO: DictionaryDao,
-    private readonly freeDictionaryServices: FreeDictionaryServices,
-  ) {}
+  constructor(private readonly dictionaryDAO: DictionaryDao) {}
 
   async execute(
     input?: DictionaryFindAllDTO,
   ): Promise<DictionaryOutputPaginated> {
     try {
-      const freeDictionaryInformation =
-        await this.freeDictionaryServices.getInformation(input?.search);
       const queryParams = {
         search: input?.search,
         limit: input?.limit || '10',
@@ -28,9 +22,10 @@ class FindAllUseCase {
 
       const totalCount = await this.dictionaryDAO.count(queryParams);
       const totalPages = Math.ceil(totalCount / limitNumber);
+      const results = await this.dictionaryDAO.findAll(queryParams);
 
       return {
-        results: freeDictionaryInformation,
+        results: results,
         totalDocs: totalCount,
         page: pageNumber,
         totalPages: Math.floor(totalPages),

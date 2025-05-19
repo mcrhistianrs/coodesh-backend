@@ -22,12 +22,16 @@ class DictionaryDao {
   }
 
   async findAll(input: DictionaryFindAllDTO): Promise<Dictionary[]> {
-    const { search } = input;
+    const { search, limit, page } = input;
     const query = {};
     if (search) {
       query['word'] = { $regex: search, $options: 'i' };
     }
-    const dictionaries = await this.dictionaryMongoSchema.find(query);
+    const skip = (Number(page) - 1) * Number(limit);
+    const dictionaries = await this.dictionaryMongoSchema
+      .find(query)
+      .skip(skip)
+      .limit(Number(limit));
     return dictionaries.map(DictionaryMapper.toDomain);
   }
 

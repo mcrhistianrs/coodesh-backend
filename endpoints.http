@@ -1,4 +1,4 @@
-@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2ZDhmOTJiMGIzM2NhOGIwOSIsImlhdCI6MTc0NzQ4MTExOSwiZXhwIjoxNzQ3NDg0NzE5fQ.NODGkRz9boKRJbNIoyxHO1YF58ehz4fAeCrwlhP_7eM
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjNhZWY2ZDhmOTJiMGIzM2NhOGIwOSIsImlhdCI6MTc0NzY1ODk1MCwiZXhwIjoxNzQ3NjYyNTUwfQ.Z_fIXv_baBbWf15Vt9RSL5YqqUeHWd2mfUJrCx0yWnc
 
 ### Create User
 POST http://localhost:3000/user
@@ -35,10 +35,10 @@ Content-Type: application/json
 
 
 ### Get all words with filter
-GET http://localhost:3000/dictionary/entries/en?search=car&limit=5
+GET http://localhost:3000/dictionary/entries/en?limit=2
 
 ### Get all words with filter and pagination
-GET http://localhost:3000/dictionary/entries/en?search=car&limit=5&page=2
+GET http://localhost:3000/dictionary/entries/en?limit=5&page=2
 
 ### Get a specific word using jwt token
 GET http://localhost:3000/dictionary/entries/en/adenocarcinoma
@@ -76,3 +76,6 @@ Authorization: Bearer {{authToken}}
 ### Get user profile
 GET http://localhost:3000/user/me
 Authorization: Bearer {{authToken}}
+
+### teste
+GET http://localhost:3000/dictionary/entries/en?limit=5&page=1

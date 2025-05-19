@@ -1,5 +1,5 @@
 class DictionaryOutputPaginated {
-  results: string[];
+  results: any[];
   totalDocs: number;
   page: number;
   totalPages: number;
